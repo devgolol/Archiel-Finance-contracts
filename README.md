@@ -2,7 +2,7 @@
 
 Official smart contract source code for **Archiel Finance**, a DeFi protocol on Arc Network offering swap, concentrated liquidity pools, staking, lending, futures/perpetuals, and cross-chain FX swap.
 
-🔗 App: 🔗 App: [archielfinance.xyz](https://archielfinance.xyz/)
+   🔗 App: [archielfinance.xyz](https://archielfinance.xyz/)
 
 > ⚠️ This repository contains contracts currently deployed on **Arc Testnet**. Addresses and contracts may change during active development. Always verify the deployed address against the live app before interacting with any contract directly.
 >
