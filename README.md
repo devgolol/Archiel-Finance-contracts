@@ -4,7 +4,7 @@ Official smart contract source code for **Archiel Finance**, a DeFi protocol on 
 
    🔗 App: [archielfinance.xyz](https://archielfinance.xyz/)
 
-> ⚠️ This repository contains contracts currently deployed on **Arc Testnet**. Addresses and contracts may change during active development. Always verify the deployed address against the live app before interacting with any contract directly.
+> ⚠️ This repository contains contracts currently deployed on **Arc Network**. Addresses and contracts may change during active development. Always verify the deployed address against the live app before interacting with any contract directly.
 >
 > 🆕 `ArchielV3` (concentrated liquidity AMM) and `ArchielVaultV3.sol` were deployed recently (within the past week) and are the current active pool/vault implementations, superseding `ArchielPools.sol` and earlier vault versions.
 
