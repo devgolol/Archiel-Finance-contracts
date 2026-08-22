@@ -92,7 +92,7 @@ This migration is in progress due to Pyth's paid API requirement effective Augus
 
 ## Deployed Addresses (Arc Testnet)
 
-**ArchielV3 (Concentrated Liquidity AMM)** — deployed ~1 week ago
+**ArchielV3 (Concentrated Liquidity AMM)**
 
 | Contract | Address |
 |---|---|
