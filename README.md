@@ -5,8 +5,6 @@ Official smart contract source code for **Archiel Finance**, a DeFi protocol on 
    🔗 App: [archielfinance.xyz](https://archielfinance.xyz/)
 
 > ⚠️ This repository contains contracts currently deployed on **Arc Network**. Addresses and contracts may change during active development. Always verify the deployed address against the live app before interacting with any contract directly.
->
-> 🆕 `ArchielV3` (concentrated liquidity AMM) and `ArchielVaultV3.sol` were deployed recently (within the past week) and are the current active pool/vault implementations, superseding `ArchielPools.sol` and earlier vault versions.
 
 ---
 
@@ -72,9 +70,9 @@ contracts/
 
 Deployed at `0xcAdDE50c774B8D5314e4859fc9711AB28026B3f8` on Arc Testnet.
 
-This contract was originally built as a full AMM liquidity pool (deposit, swap, withdraw, LP shares — replacing an earlier buggy pool where `withdrawLiquidity()` always reverted). It also contains a separate internal ledger, `futuresReserve`, purpose-built to hold trader margin/collateral for Futures/Perpetuals trading, kept isolated from the swap-pair reserves so trader PnL never affects swap pricing or LP principal.
+This contract was originally built as a full AMM liquidity pool (deposit, swap, withdraw, LP shares — replacing an earlier buggy pool where `withdrawLiquidity()` always reverted). It also contains a separate internal ledger, `futuresReserve`, used to hold trader margin/collateral for Futures/Perpetuals trading, kept isolated from the swap-pair reserves so trader PnL never affects swap pricing or LP principal.
 
-**Current status:** the swap/LP side of this contract is no longer the primary liquidity venue — that role has moved to the ArchielV3 concentrated liquidity pools. **This contract is currently used only as the reward/margin pool for Perpetuals trading**, via its `futuresReserve` module — holding user-deposited margin and reward funds for `ArchielFutures.sol` / `ArchielPerp.sol`. The on-chain contract name (`ArchielLiquidityPool`) reflects its original design and cannot be changed post-deployment.
+Current status: the swap/LP side of this contract is no longer the primary liquidity venue — that role has moved to the ArchielV3 concentrated liquidity pools. This contract is currently used only as the reward/margin pool for Perpetuals trading, via its `futuresReserve` module — holding user-deposited margin and reward funds for `ArchielFutures.sol` / `ArchielPerp.sol`. The on-chain contract name (`ArchielLiquidityPool`) reflects its original design and cannot be changed post-deployment.
 
 ---
 
@@ -83,10 +81,8 @@ This contract was originally built as a full AMM liquidity pool (deposit, swap, 
 `ArchielFxEscrow.sol` supports multiple oracle sources per token via an `oracleSource[token]` selector:
 
 - **Pyth Network** — used for Futures/Lending price feeds
-- **RedStone** — primary oracle for FX swap (`redstone-primary-prod`, `uniqueSignersCount: 3`)
-- **Chainlink** — fallback source, token-dependent
 
-This migration is in progress due to Pyth's paid API requirement effective August 18, 2026.
+This migration is in progress due to Pyth's paid API requirement effective August 18, 2026. The app currently still runs on Pyth, so Futures/Perp and Archiel FX trading are temporarily disabled on Arc Testnet (opening new positions is paused).
 
 ---
 
@@ -104,18 +100,16 @@ This migration is in progress due to Pyth's paid API requirement effective Augus
 | PositionManager | `0x6f84C45A91557A46015a2272FDF80839f2fb77Cc` |
 | VaultV3 | `0x0aa13ba5Fd25F0695AEd61264A4842Fa00B707bd` |
 
-> ⚠️ Double-check every address above against the live app before interacting directly — always verify via the block explorer that the deployed bytecode matches the source in this repo.
-
 **FX Swap**
 
 | Contract | Address | Status |
 |---|---|---|
-| ArchielFxEscrow | `0xbf0a0bFFC8EE69662bA6Fd24303CA141105dCE55` | 🔧 Current live version — being migrated from Pyth-only to hybrid oracle (Pyth / RedStone / Chainlink). Address will be updated here once the new version is deployed. |
-| ArchielFxToken — Archiel IDR (IDRC) | `0x63f4b175CC0d9B5E1DAC459e93E375479Df60150` | One of the FX-pegged tokens deployed via `ArchielFxToken.sol`. More FX tokens may be deployed as additional currencies go live — this table will be updated as they are added. |
+| ArchielFxEscrow | `0xbf0a0bFFC8EE69662bA6Fd24303CA141105dCE55` | Current live version — runs on Pyth. Trading is temporarily disabled on Arc Testnet due to Pyth's paid API requirement. |
+| ArchielFxToken — Archiel IDR (IDRC) | `0x63f4b175CC0d9B5E1DAC459e93E375479Df60150` | FX/commodity-pegged synthetic token |
 | ArchielFxToken — Archiel Synthetic Silver (sXAG) | `0x12E7D219ceE9DDa3294CC7A58b3475E53AB04011` | FX/commodity-pegged synthetic token |
-| ArchielFxToken — Archiel JPY (JPYC) | `0xF2795D69dFB1C1Be8B034c18570cD4672a1e541d` | FX-pegged synthetic token |
-| ArchielFxToken — Archiel AUD (AUDC) | `0x68d4813a70d1eAb1949f70Ae503e0d51Ba9563Dc` | FX-pegged synthetic token. Note: `AUD_FX` is marked `onchainSwapDisabled: true` on the RedStone feed specifically — AUD swap works normally when routed via the Pyth oracle source. |
-| ArchielFxToken — Archiel GBP (GBPC) | `0xcb0a04055914de60EcDAC1e420f4D851753De3b3` | FX-pegged synthetic token |
+| ArchielFxToken — Archiel JPY (JPYC) | `0xF2795D69dFB1C1Be8B034c18570cD4672a1e541d` | FX/commodity-pegged synthetic token |
+| ArchielFxToken — Archiel AUD (AUDC) | `0x68d4813a70d1eAb1949f70Ae503e0d51Ba9563Dc` | FX/commodity-pegged synthetic token |
+| ArchielFxToken — Archiel GBP (GBPC) | `0xcb0a04055914de60EcDAC1e420f4D851753De3b3` | FX/commodity-pegged synthetic token |
 | ArchielFxToken — Archiel Synthetic Gold (sXAU) | `0xf876cD0f025baDfb49602BDd8feEa9Fca05cCb0c` | FX/commodity-pegged synthetic token |
 
 **Staking**
@@ -130,7 +124,7 @@ This migration is in progress due to Pyth's paid API requirement effective Augus
 |---|---|---|
 | ArchielProxy | `0x1efA884d6C8835B9516cC79337867726e59d198D` | Upgradeable proxy — current implementation is `ArchielPerp.sol`. Interact via this proxy address, not the implementation directly. |
 | ArchielFutures | `0x1dE8FC610DA4744832C066F11E9b657Ae9a7193B` | Standalone Futures contract |
-| ArchielLiquidityPool (`ArchielPools.sol`) | `0xcAdDE50c774B8D5314e4859fc9711AB28026B3f8` | Legacy name — currently used only as the reward/margin pool for Perp trading, not for swap/LP. See note below. |
+| ArchielLiquidityPool (`ArchielPools.sol`) | `0xcAdDE50c774B8D5314e4859fc9711AB28026B3f8` | Legacy name — currently used only as the reward/margin pool for Perp trading, not for swap/LP. |
 
 **Lending**
 
@@ -147,10 +141,6 @@ This migration is in progress due to Pyth's paid API requirement effective Augus
 
 ---
 
-## Deployment
-
-Deployment scripts are in `/scripts`. Pinned deployment records (contract address ↔ block number) are tracked under `/.deploys/pinned-contracts/`.
-
 ## Disclaimer
 
-This repository is provided for transparency and audit purposes. It does not constitute financial advice. Always DYOR (do your own research) before interacting with any smart contract.
+Not financial advice. Verify contract addresses against the live app before interacting directly.
