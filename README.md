@@ -52,9 +52,9 @@ contracts/
 | `ArchielV3PositionManager.sol` / `ArchielV3SwapRouter.sol` / `ArchielV3Quoter.sol` | ✅ Active | V3 periphery contracts |
 | `ArchielLendingBorrow_v3.sol` | ✅ Active | Lending market |
 | `ArchielStakingV3.sol` | ✅ Active | Multi-asset staking, per-second APR accrual |
-| `ArchielFutures.sol` / `ArchielPerp.sol` | ⏸️ Temporarily disabled | Futures / perpetuals trading — opening new positions is paused on Arc Testnet. See [Oracle Architecture](#oracle-architecture-fx-swap) note below. |
+| `ArchielFutures.sol` / `ArchielPerp.sol` | ⏸️ Temporarily disabled | Futures / perpetuals trading — opening new positions is paused on Arc Testnet. See [Oracle Architecture](#oracle-architecture) note below. |
 | `ArchielPools.sol` (on-chain: `ArchielLiquidityPool`) | ⚠️ Partially active (legacy) | AMM swap/LP functionality is **deprecated**, superseded by ArchielV3 pools. Only the `futuresReserve` module inside this contract is still active — it holds trader margin/collateral for `ArchielFutures.sol` / `ArchielPerp.sol`. See note below. |
-| `ArchielFxEscrow.sol` | ⏸️ Temporarily disabled | FX-pegged asset trading — still in active development (migrating from Pyth-only to hybrid oracle: Pyth / RedStone / Chainlink). See [Oracle Architecture](#oracle-architecture-fx-swap) note below. |
+| `ArchielFxEscrow.sol` | ⏸️ Temporarily disabled | FX-pegged asset trading — still in active development (migrating from Pyth-only to hybrid oracle: Pyth / RedStone / Chainlink). See [Oracle Architecture](#oracle-architecture) note below. |
 | `ArchielFxToken.sol` | ✅ Active | FX-pegged synthetic asset |
 | `ArchielVaultV3.sol` | ✅ Active | Protocol vault |
 | `ArchielToken.sol` | ✅ Active | Native protocol token |
@@ -76,7 +76,7 @@ Current status: the swap/LP side of this contract is no longer the primary liqui
 
 ---
 
-## Oracle Architecture (FX Swap)
+## Oracle Architecture
 
 > **Note:** Futures/Perp and FX Swap trading are temporarily disabled on Arc Testnet. Pyth Network moved its price feed API to a paid tier, and the oracle integration for these modules has not yet been migrated to an alternative provider (e.g. RedStone). Opening new positions is paused until a replacement feed is in place.
 
