@@ -21,8 +21,8 @@ contracts/
 │   ├── ArchielProxy.sol
 │   ├── ArchielStakingV3.sol
 │   ├── ArchielToken.sol
-│   ├── ArchielVaultV3.sol            # Current active vault (deployed ~1 week ago)
-│   ├── ArchielV3/                    # Concentrated liquidity AMM (deployed ~1 week ago)
+│   ├── ArchielVaultV3.sol            # Current active vault 
+│   ├── ArchielV3/                    # Concentrated liquidity AMM 
 │   │   └── contracts/
 │   │       ├── core/                 # Factory, Pool
 │   │       ├── interfaces/
