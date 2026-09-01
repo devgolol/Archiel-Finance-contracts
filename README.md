@@ -140,7 +140,3 @@ This migration is in progress due to Pyth's paid API requirement effective Augus
 | RegarToken (REGAR) | `0x18C6B42c586A49c18bf151cf9944f4fDCa6FE61D` |
 
 ---
-
-## Disclaimer
-
-Not financial advice. Verify contract addresses against the live app before interacting directly.
