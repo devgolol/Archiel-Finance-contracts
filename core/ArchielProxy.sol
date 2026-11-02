@@ -79,6 +79,7 @@ library Address {
 
     function sendValue(address payable recipient, uint256 amount) internal {
         if (address(this).balance < amount) revert AddressInsufficientBalance(address(this));
+        // Security Fix (#1): Mitigate reentrancy on native value transfer
         (bool success, ) = recipient.call{value: amount}("");
         if (!success) revert FailedInnerCall();
     }
